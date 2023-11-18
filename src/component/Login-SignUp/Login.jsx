@@ -50,7 +50,7 @@ const Login = () => {
       {(formik) => (
         <form onSubmit={formik.handleSubmit} className="register-form">
           <div>
-            <h3>email:RohanShrestha@gamil.com || password:hellojhgffj</h3>
+            <h3>email:RohanShrestha@gmail.com || password:hellojhgffj</h3>
           </div>
           <div className="register-form-parent" style={{ width: "300px" }}>
             <div
