@@ -7,16 +7,21 @@ import { useMutation } from "react-query";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { registerApi } from "../../lib/api/login-signup";
+import Loader from "../../loader/Loader";
 const Register = () => {
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["register-key"],
     mutationFn: (values) => registerApi(values),
     onSuccess: (respond) => {
       navigate("/login");
     },
   });
+
+  if (isLoading) {
+    <Loader />;
+  }
   return (
     <Formik
       initialValues={{
