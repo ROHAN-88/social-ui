@@ -14,7 +14,7 @@ const Register = () => {
     mutationKey: ["register-key"],
     mutationFn: (values) => registerApi(values),
     onSuccess: (respond) => {
-      console.log(respond);
+      navigate("/login");
     },
   });
   return (
