@@ -18,7 +18,7 @@ const Home = () => {
         <Grid container spacing={5}>
           <Grid
             item
-            xs={3}
+            md={3}
             sx={{
               display: {
                 xs: "none",
@@ -35,7 +35,7 @@ const Home = () => {
             md={6}
             sx={{
               paddingRight: {
-                xs: "2rem",
+                xs: "0rem",
                 sm: "2rem",
                 md: "none",
               },

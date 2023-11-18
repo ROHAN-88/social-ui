@@ -35,7 +35,7 @@ const BlogCard = (props) => {
     createdAt,
     userId,
   } = props;
-  console.log(pictureUrl);
+
   //!react -redux
   const { mode } = useSelector((state) => state.darkMode);
 
@@ -85,7 +85,14 @@ const BlogCard = (props) => {
   });
 
   return (
-    <div style={{ margin: "0 0 2rem 4rem" }}>
+    <Box
+      sx={{
+        margin: {
+          xs: "0 0 2rem 0rem",
+          md: "0 0 2rem 4rem ",
+        },
+      }}
+    >
       <Card
         sx={{ maxWidth: 645, borderRadius: "20px " }}
         id={mode ? "darkModeCard" : ""}
@@ -189,7 +196,7 @@ const BlogCard = (props) => {
           </IconButton>
         </CardActions>
       </Card>
-    </div>
+    </Box>
   );
 };
 
