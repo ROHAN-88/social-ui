@@ -14,3 +14,7 @@ body {
   background-color: white;
   color: black;
 }
+
+.error-msg {
+  color: red;
+}

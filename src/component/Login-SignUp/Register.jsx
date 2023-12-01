@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import "./Register.css";
 import { useMutation } from "react-query";
@@ -8,14 +8,26 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { registerApi } from "../../lib/api/login-signup";
 import Loader from "../../loader/Loader";
+
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 const Register = () => {
+  //?firebase-===============
+  let auth = getAuth();
+
+  //!firebse useEffect()
+  // useEffect(() => {}, []);
+
+  //?Navigation========
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation({
     mutationKey: ["register-key"],
     mutationFn: (values) => registerApi(values),
     onSuccess: (respond) => {
-      navigate("/login");
+      callMessage();
+      console.log("react: ", respond);
+      // navigate("/login");
     },
   });
 
@@ -51,9 +63,18 @@ const Register = () => {
         location: Yup.string().required("Location is Requried"),
         occupation: Yup.string().required("Occupation is requried"),
       })}
-      onSubmit={(values) => {
-        console.log(values);
-        mutate(values);
+      onSubmit={async (values) => {
+        try {
+          const firebaseLogin = await createUserWithEmailAndPassword(
+            auth,
+            values.email,
+            values.password
+          );
+          console.log(firebaseLogin.respond);
+          mutate(values);
+        } catch (e) {
+          alert(e.message);
+        }
       }}
     >
       {(formik) => (
