@@ -18,10 +18,11 @@ const Login = () => {
   const messaging = getMessaging(app);
 
   const [regToken, setRegToken] = useState("");
+  const [webToken, setWebToken] = useState("");
 
-  const callMessage = () => {
+  const callMessage = async () => {
     // let regToken = "";
-    // Request permission and get FCM token
+    // Request permission and get FCM tokens
     Notification.requestPermission()
       .then((permission) => {
         if (permission === "granted") {
@@ -31,6 +32,7 @@ const Login = () => {
             console.log("Registration token:", token);
             // regToken = token;
             setRegToken(token);
+            setWebToken(token);
             // Send registration token to server for subscription
             // ...
           });
@@ -58,7 +60,8 @@ const Login = () => {
       //!fireBase =============
       // callMessage();
       // const token = callMessage();
-      await sendNotification(regToken, "hello world");
+      // await sendNotification(regToken, "hello world");
+      await sendNotification(regToken, webToken);
       //!=========================
 
       const accesstoken = respond?.data?.accesstoken;
