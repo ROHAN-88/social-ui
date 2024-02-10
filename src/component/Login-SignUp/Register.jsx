@@ -9,15 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { registerApi } from "../../lib/api/login-signup";
 import Loader from "../../loader/Loader";
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
 const Register = () => {
-  //?firebase-===============
-  let auth = getAuth();
-
-  //!firebse useEffect()
-  // useEffect(() => {}, []);
-
   //?Navigation========
   const navigate = useNavigate();
 
@@ -25,9 +17,11 @@ const Register = () => {
     mutationKey: ["register-key"],
     mutationFn: (values) => registerApi(values),
     onSuccess: (respond) => {
-      callMessage();
       console.log("react: ", respond);
-      // navigate("/login");
+      navigate("/login");
+    },
+    onError: (e) => {
+      console.log("react", e);
     },
   });
 
@@ -41,7 +35,6 @@ const Register = () => {
         lastName: "",
         email: "",
         password: "",
-
         location: "",
         occupation: "",
       }}
@@ -64,17 +57,7 @@ const Register = () => {
         occupation: Yup.string().required("Occupation is requried"),
       })}
       onSubmit={async (values) => {
-        try {
-          const firebaseLogin = await createUserWithEmailAndPassword(
-            auth,
-            values.email,
-            values.password
-          );
-          console.log(firebaseLogin.respond);
-          mutate(values);
-        } catch (e) {
-          alert(e.message);
-        }
+        mutate(values);
       }}
     >
       {(formik) => (

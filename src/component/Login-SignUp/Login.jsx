@@ -9,46 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../lib/api/login-signup";
 import Loader from "../../loader/Loader";
 
-import { app } from "../firebase/firebaseconfig";
-import { getMessaging, getToken } from "firebase/messaging";
-import { sendNotification } from "../firebase/firebaseAxios";
 const Login = () => {
   const navigate = useNavigate();
-
-  const messaging = getMessaging(app);
-
-  const [regToken, setRegToken] = useState("");
-  const [webToken, setWebToken] = useState("");
-
-  const callMessage = async () => {
-    // let regToken = "";
-    // Request permission and get FCM tokens
-    Notification.requestPermission()
-      .then((permission) => {
-        if (permission === "granted") {
-          console.log("Push notification permission granted");
-          // Get registration token
-          getToken(messaging).then((token) => {
-            console.log("Registration token:", token);
-            // regToken = token;
-            setRegToken(token);
-            setWebToken(token);
-            // Send registration token to server for subscription
-            // ...
-          });
-        } else {
-          console.warn("Push notification permission denied");
-        }
-      })
-      .catch((error) => {
-        console.error("Error requesting push notification permission:", error);
-      });
-    // return regToken;
-  };
-
-  useEffect(() => {
-    callMessage();
-  }, []);
 
   //!mutation =========
 
@@ -56,12 +18,6 @@ const Login = () => {
     mutationKey: ["login-mutation"],
     mutationFn: (values) => loginApi(values),
     onSuccess: async (respond) => {
-      // console.log(respond);
-      //!fireBase =============
-      // callMessage();
-      // const token = callMessage();
-      // await sendNotification(regToken, "hello world");
-      await sendNotification(regToken, webToken);
       //!=========================
 
       const accesstoken = respond?.data?.accesstoken;
